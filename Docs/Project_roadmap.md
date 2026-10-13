@@ -692,6 +692,36 @@ Build Comparisons
 Reference Build Database
 
 
+------------------------------------------------------------
+
+Skill Metadata Investigation
+------------------------------------------------------------
+
+Investigate:
+
+    act_dex.lua
+    act_int.lua
+    act_str.lua
+
+    sup_dex.lua
+    sup_int.lua
+    sup_str.lua
+
+    minion.lua
+    spectre.lua
+    other.lua
+
+Goals:
+
+    - Skill Tags
+    - Support Tags
+    - Compatibility Rules
+    - Attribute Requirements
+    - Spirit Costs
+    - Granted Effects
+    - Mechanic Metadata
+
+
 ============================================================
 ARCHITECTURE REQUIREMENTS
 ============================================================

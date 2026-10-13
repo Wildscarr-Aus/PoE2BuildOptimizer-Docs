@@ -240,12 +240,75 @@ PoB2Importer
 TreeAuditor
 
 
+------------------------------------------------------------
+AUTHORITATIVE DATA SOURCES
+------------------------------------------------------------
+
+GGG-generated files are read-only, whether they are
+accessed from a local PoB2 installation or are present
+in the public repository or workspace.
+
+Examples
+
+    TreeData/*
+
+    Data/Skills/*
+
+The optimizer may:
+
+    Read
+
+    Parse
+
+    Cache
+
+    Analyse
+
+The optimizer must never:
+
+    Modify
+
+    Patch
+
+    Overwrite
+
+
 
 #=====================================================================
 #
 # SECTION 3 - ARCHITECTURE LAYERS
 #
 #=====================================================================
+
+------------------------------------------------------------
+STATIC KNOWLEDGE LAYER
+------------------------------------------------------------
+
+    Passive Tree
+
+    Skills
+
+    Supports
+
+    Mechanics
+
+    Conditions
+
+------------------------------------------------------------
+DYNAMIC CHARACTER LAYER
+------------------------------------------------------------
+
+    Items
+
+    Jewels
+
+    Charms
+
+    Flasks
+
+    Runes
+
+    Corruptions
 
 ------------------------------------------------------------
 INFRASTRUCTURE LAYER

@@ -1047,6 +1047,32 @@ AI remains:
 - Provider Agnostic
 - Not Developer Funded
 
+------------------------------------------------------------
+
+Damage Chain Investigation Milestone
+
+First live build analysed:
+
+    Whirling twisters.xml
+
+Primary Skill:
+
+    Twister
+
+Damage Source:
+
+    Twister
+
+Major Findings:
+
+- Damage Chain pipeline validated.
+- Primary skill selection appears correct.
+- Relationship classifications currently mostly UNKNOWN.
+- Twister interacts with elemental ground effects.
+- Whirling Slash interacts with elemental ground effects.
+- Frozen Mandibles can participate in the damage system via ground effects.
+- PoE2 builds appear to be mechanic networks rather than simple skill collections.
+
 ----------
 
 #=====================================================================
