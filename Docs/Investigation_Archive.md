@@ -1073,6 +1073,114 @@ Major Findings:
 - Frozen Mandibles can participate in the damage system via ground effects.
 - PoE2 builds appear to be mechanic networks rather than simple skill collections.
 
+# Investigation Update - 2026-10-15
+
+Phase 4B-4A is complete. DamageChainRecord was extracted from
+damage_chain_resolver.py into damage_chain_record.py as the canonical
+damage-chain model. DamageChainResolver remains in
+damage_chain_resolver.py and owns resolution. The record now includes
+a damage_sources collection. Resolver, report, and record tests passed:
+25 tests after the refactor.
+
+Phase 4B-4B is partially complete. Triggered Skill Promotion is implemented:
+triggered skills are promoted as additional damage-source candidates while
+existing candidates remain preserved. Twister, Cast on Crit, and
+Totem/enabler validation pass, with 13 DamageChainResolver tests passing.
+
+Remaining work is the formal relationship classification layer, including
+trigger classification, amplifier classification, and separation of
+Triggers vs Enablers. Contributor ranking and rotation analysis remain out
+of scope.
+
+## Multi-source and Trigger Promotion Findings
+
+Real builds can contain multiple meaningful damage sources. Triggered
+skills should be promoted as additional damage-source candidates, not
+used to replace existing contributors.
+
+## Revised Rule 001
+
+Triggered Skill Promotion
+
+Status:
+
+IMPLEMENTED AND VALIDATED
+
+Definition:
+
+When A TRIGGERS B:
+
+- Promote B to a damage-source candidate.
+- Keep existing damage-source candidates.
+- Preserve the trigger relationship and enablers.
+
+Validation Status:
+
+PASSING
+
+Validated By:
+
+- Triggered meta-skill promotion test.
+- Multi-source promotion test.
+- Twister + triggered skill validation.
+
+Examples:
+
+- Twister builds may have Twister and ground-effect damage components.
+- Cast on Critical builds may have a primary skill and triggered damage skills.
+- Lightning Arrow can contribute damage while Comet is a triggered damage
+  candidate; Lightning Rod can be an enabler or amplifier of critical-hit
+  generation.
+
+Classification distinguishes:
+
+- Damage sources: skills that directly contribute meaningful damage.
+- Triggers: skills or mechanics that activate other skills.
+- Enablers: skills or mechanics required for damage generation.
+- Amplifiers: skills or mechanics that increase effectiveness.
+- Supports: traditional support relationships.
+
+Detection must be relationship-driven using RelationshipType values such as
+TRIGGERS, ENABLES, AMPLIFIES, and SUPPORTS. Avoid skill-name-specific rules.
+Future game-specific behavior belongs in metadata and the future Skill /
+Support / Mechanic Rules Engine.
+
+Contributor ranking and rotation analysis are not part of Phase 4B-4B;
+rotation analysis remains future optimization-phase work.
+
+## Investigation Update — 2026-10-18
+
+### Skill Role and Viability Design
+
+Phase 4D.3 separates capability, build-local role, investment, importance,
+and viability. A skill may have multiple roles; low support count does not
+prove low importance, and damage capability does not prove that the build
+invests in or relies on the skill. The design is documented in
+`Data/Reports/Phase_4D_3_Skill_Role_And_Viability_Design.md`.
+
+### Evidence Schema Validator
+
+The Evidence Schema validator is implemented using JSON Schema Draft
+2020-12 and supports `evidence_version` 2.0.0. Validation, collection
+lineage checks, and an append-only in-memory ledger are covered by tests.
+The complete suite passed with 368 tests. The validator contract's required
+fields and vocabularies differ from portions of the Phase 4D.3 proposal.
+That mismatch remains an explicit contract-reconciliation gate; evidence
+producers must not adopt either contract by assumption.
+
+### Real-Build Review Findings
+
+- Whirling Twisters has four structurally validated Cast on Critical trigger
+  edges to Profane Ritual, Elemental Weakness, Frost Bomb, and Flame Wall.
+- Boundless Energy II directly supports Cast on Critical; its paths to the
+  triggered targets remain indirect and unresolved. Do not infer propagation.
+- Herald skills were emitted as secondary-damage chains despite the reviewed
+  mechanics evidence not declaring `Damage` or `DamageOverTime`. Treat these
+  as suspicious classifications for evidence-backed follow-up, not as a
+  reason for skill-name-specific logic.
+- Spin to Win Monk, Whirling Twisters, and Gemling Firesmasher remain the
+  validation fixtures for role/viability and damage-source review.
+
 ----------
 
 #=====================================================================

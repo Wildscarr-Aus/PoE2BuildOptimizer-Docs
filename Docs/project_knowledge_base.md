@@ -200,8 +200,13 @@ Quality Control Philosophy
 
 Current Focus
 
-    Transition from audit work
-    into implementation work.
+    Phase 4D.4 Evidence Schema validation
+    is implemented for Draft 2020-12 and
+    evidence_version 2.0.0. Before other
+    systems emit Evidence Records, resolve
+    the implementation/design contract
+    discrepancy. Phase 4D.3 Skill Role &
+    Viability is design-complete.
 
 
 
@@ -219,13 +224,17 @@ Current Roadmap
 
     Phase 2
     GraphBuilder
-    Current Focus
+    Complete
 
     Phase 3
     Pathfinder
+    Complete
 
     Phase 4
-    Optimizer Engine
+    Build Understanding
+    Current work: Evidence Schema contract
+    reconciliation, then evidence-backed
+    capability and role assessment.
 
     Phase 5
     UI
@@ -800,7 +809,7 @@ When a new idea is discovered:
 
 4. Resume current milestone immediately.
 
-Current Active Milestone
+Historical Active Milestone Snapshot
 ------------------------------------------------------------
 
 Phase 4B-3
@@ -911,6 +920,28 @@ V3+
 
 #=====================================================================
 #
+## Authoritative Evidence-First Status — 2026-10-18
+
+This status supersedes the older phase snapshots above. The implementation
+provides a Draft 2020-12 Evidence Schema validator for version 2.0.0, but its
+required fields and vocabularies differ from portions of the Phase 4D.3
+design proposal. No producer should adopt the contract until that mismatch
+is resolved and the selected contract is validated.
+
+The intended sequence is: approve the shared evidence contract; emit
+validated capability and build-context facts; derive multi-role skill,
+importance, and viability conclusions with evidence references; then revisit
+damage-source integration and optimizer consumers. Evidence is immutable;
+conclusions are replaceable and must remain traceable.
+
+Real-build review found structurally valid Cast on Critical trigger chains
+for Profane Ritual, Elemental Weakness, Frost Bomb, and Flame Wall in
+Whirling Twisters. Boundless Energy II's paths to triggered targets remain
+indirect and unresolved. Herald skills emitted as secondary-damage chains
+despite mechanics evidence not declaring Damage or DamageOverTime remain
+suspicious and require future evidence-backed classification. These findings
+do not authorize name-based fixes or propagation assumptions.
+
 # END OF KNOWLEDGE BASE
 #
 #=====================================================================

@@ -202,6 +202,65 @@ Status
 
 #=====================================================================
 #
+# ARCHITECTURE MILESTONE STATUS
+#
+#=====================================================================
+
+COMPLETE
+
+    Tree Audit Framework
+
+    Version-Aware Tree Loading
+
+    PoB Knowledge Inventory
+
+    Registry Architecture
+
+    Registry Foundation
+
+    GemDatabase V2
+
+    SkillIdentity Metadata Integration
+
+    Contributor Framework
+
+    Evidence Framework
+
+    Real Build Validation
+
+IN PROGRESS
+
+    Build Understanding Architecture
+
+IMPLEMENTED AND VALIDATED
+
+    PoBSkillDatabase
+
+    Evidence Schema validator foundation
+
+PLANNED
+
+    Relationship Discovery 2.0
+
+    Damage Resolution 2.0
+
+    Contributor Evidence Expansion
+
+    Optimizer Engine
+
+    User Interface
+
+    Installer & Deployment
+
+Architecture references:
+
+    Data/Reports/PoB2_Roaming_Data_Ingestion_Report.md
+
+    Data/Reports/Phase_4A_PoB_Skill_Mechanics_Database_Design.md
+
+
+#=====================================================================
+#
 # SECTION 2 - PROTECTED ARCHITECTURE ASSETS
 #
 #=====================================================================
@@ -281,6 +340,72 @@ The optimizer must never:
 #=====================================================================
 
 ------------------------------------------------------------
+BUILD UNDERSTANDING ARCHITECTURE
+------------------------------------------------------------
+
+Layer 1 - PoB Knowledge
+
+    TreeData
+
+    gems.lua
+
+    Data/Skills
+
+    GameVersions
+
+    PoB is authoritative for game data,
+    gem metadata, skill mechanics,
+    compatibility rules, and versions.
+
+Layer 2 - Build Identity
+
+    Build XML
+
+    Skill Identity
+
+    Resolved PoB Metadata
+
+Layer 3 - Build Understanding
+
+    Relationships
+
+    Damage Chains
+
+    Contributors
+
+Layer 4 - Optimizer Intelligence
+
+    Optimization
+
+    Recommendations
+
+Key Principle
+
+    PoB knows the game.
+
+    The optimizer understands the build.
+
+Planned data flow
+
+    PoB Knowledge
+        ↓
+    GemDatabase
+        ↓
+    PoBSkillDatabase
+        ↓
+    Skill Identity
+        ↓
+    Relationship Discovery
+        ↓
+    Build Understanding
+        ↓
+    Optimization
+
+PoBSkillDatabase is implemented.
+Relationship Discovery 2.0 depends on it.
+See the current status update in this register.
+
+------------------------------------------------------------
 STATIC KNOWLEDGE LAYER
 ------------------------------------------------------------
 
@@ -293,6 +418,30 @@ STATIC KNOWLEDGE LAYER
     Mechanics
 
     Conditions
+
+------------------------------------------------------------
+CURRENT EVIDENCE-FIRST BUILD UNDERSTANDING
+------------------------------------------------------------
+
+Evidence Records are the shared provenance contract for future build
+understanding. Evidence is immutable; conclusions are derived, versioned,
+and traceable to evidence IDs. The intended consumer flow includes
+mechanics, relationships, contributors, damage chains, skill roles,
+importance, viability, and eventually optimization.
+
+Implemented foundation:
+
+    Src/Core/Evidence/evidence_schema.py
+
+    Src/Core/Evidence/evidence_validator.py
+
+The Draft 2020-12 validator supports evidence_version 2.0.0 and an
+append-only in-memory acceptance ledger. It is not yet wired into all
+producers or persistent stores. Its required fields and vocabularies differ
+from portions of the Phase 4D.3 design proposal; contract reconciliation
+is required before producer integration. Skill roles and viability remain
+design work. See the synchronized Phase 4D.3, damage-chain validation, and
+Evidence Schema validation reports.
 
 ------------------------------------------------------------
 DYNAMIC CHARACTER LAYER
@@ -436,6 +585,20 @@ Files
 
     Src/Analysis/gem_validator.py
 
+    Src/Analysis/damage_chain_record.py
+
+    Src/Analysis/damage_chain_resolver.py
+
+    Src/Analysis/skill_relationships.py
+
+    Src/Analysis/contributor_builder.py
+
+    Src/Io/pob_skill_database.py
+
+    Src/Core/Evidence/evidence_schema.py
+
+    Src/Core/Evidence/evidence_validator.py
+
 Responsibilities
 
     Connectivity Analysis
@@ -445,6 +608,14 @@ Responsibilities
     Reachability
 
     Gem Validation
+
+    Skill Relationship Modeling
+
+    Damage-Chain Record Modeling
+
+    Damage-Chain Resolution
+
+    Contributor Analysis
 
 ------------------------------------------------------------
 OPTIMIZATION LAYER
@@ -503,6 +674,36 @@ Status
 # SECTION 4 - CURRENT DEPENDENCY CHAIN
 #
 #=====================================================================
+
+PoB Data Registry
+        ↓
+
+Installed PoB data sources:
+TreeData / gems.lua / Data/Skills / GameVersions
+        ↓
+
+GemDatabase
+        ↓
+
+PoBSkillDatabase (implemented)
+        ↓
+
+Skill Identity
+        ↓
+
+Relationship Discovery 2.0
+        ↓
+
+Damage Chains & Contributors
+        ↓
+
+Build Understanding
+        ↓
+
+Optimizer
+
+Tree-specific lookup chain:
+        ↓
 
 paths.py
         ↓
@@ -585,7 +786,8 @@ DOCUMENTATION DIRECTORIES
 
 Docs/
 
-(Currently Empty)
+(Architecture, roadmap, project knowledge,
+principles, investigations, and reports)
 
 ------------------------------------------------------------
 HISTORICAL DIRECTORIES
@@ -644,6 +846,18 @@ gem_loader.py
 gem_validator.py
 
 pob2_exporter.py
+
+damage_chain_record.py
+
+damage_chain_resolver.py
+
+skill_relationships.py
+
+pob_skill_database.py
+
+evidence_schema.py
+
+evidence_validator.py
 
 
 
@@ -796,10 +1010,10 @@ GraphBuilder should model:
 DISCOVERY 7
 ------------------------------------------------------------
 
-Damage Chain Exists
+Damage Contributors Form Relationships
 
-Build optimisation cannot rely solely
-upon a single primary skill.
+Build analysis must not assume one skill
+is the only meaningful damage contributor.
 
 Examples:
 
@@ -808,12 +1022,11 @@ Arc Totem
     → Damage
 
 Cast on Crit
-    → Frost Bomb
-    → Exposure
+    → Triggered Damage Skill
     → Damage
 
 Future optimisation must evaluate
-damage chains rather than isolated skills.
+damage relationships rather than isolated skills.
 
 ------------------------------------------------------------
 DISCOVERY 8
@@ -872,6 +1085,43 @@ Priority:
 
     Build Target Version
         Informational
+
+------------------------------------------------------------
+DISCOVERY 11
+------------------------------------------------------------
+
+Damage Sources Must Be Promoted, Not Replaced
+
+Triggered skills can contribute meaningful
+damage alongside existing damage sources.
+
+When A TRIGGERS B:
+
+    B becomes a damage-source candidate.
+
+    Existing candidates remain valid.
+
+    The trigger relationship and enablers
+    are preserved.
+
+Classification distinguishes:
+
+    Damage Sources
+
+    Triggers
+
+    Enablers
+
+    Amplifiers
+
+    Supports
+
+Detection is relationship-driven through
+RelationshipType (for example TRIGGERS,
+ENABLES, AMPLIFIES, and SUPPORTS), not
+hard-coded skill names. Contributor ranking
+and rotation optimization are out of scope
+for Phase 4B-4B.
 
 #=====================================================================
 #

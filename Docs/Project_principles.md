@@ -248,4 +248,94 @@ Meaning
     The optimizer is always the source
     of truth.
 
+------------------------------------------------------------
+
+Principle
+
+    PoB Knowledge vs Optimizer Understanding
+
+Meaning
+
+    PoB remains authoritative for:
+
+        Tree Data
+
+        Gem Metadata
+
+        Skill Mechanics
+
+        Compatibility Rules
+
+        Version Information
+
+    The Optimizer remains responsible for:
+
+        Build Identity
+
+        Relationship Discovery
+
+        Damage Chain Analysis
+
+        Contributor Analysis
+
+        Optimization
+
+Guiding Principle
+
+    PoB knows the game.
+
+    The optimizer understands the build.
+
+------------------------------------------------------------
+
+Principle
+
+    Evidence First
+
+Meaning
+
+    Evidence records immutable facts and
+    reproducible derivations with explicit
+    provenance and lineage.
+
+    Conclusions are separate, versioned,
+    replaceable, and traceable to evidence.
+
+    A subsystem must not present a
+    conclusion without its supporting
+    evidence and limitations.
+
+------------------------------------------------------------
+
+Principle
+
+    Understand Before Optimizing
+
+Meaning
+
+    Determine a skill's build-local
+    capabilities, roles, investment,
+    importance, and viability from evidence
+    before optimizer decisions consume them.
+
+    Multiple roles and unresolved evidence
+    are valid outcomes. Absence of evidence
+    does not mean a skill is useless.
+
+------------------------------------------------------------
+
+Principle
+
+    Shared Evidence Contract
+
+Meaning
+
+    Build-understanding systems share a
+    versioned Evidence Schema.
+
+    Producers validate records before
+    acceptance. Contract changes are
+    explicit and backwards-compatible or
+    use a new schema version.
+
  

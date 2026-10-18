@@ -2,6 +2,43 @@
 POE2 BUILD OPTIMIZER ROADMAP
 ============================================================
 
+## Authoritative Current Status — 2026-10-18
+
+This status supersedes older "current focus" notes retained in the historical
+roadmap below.
+
+- The Phase 4A PoBSkillDatabase implementation and coverage work are present.
+- Phase 4D.3 Skill Role & Viability is design-complete.
+- Phase 4D.4 Evidence Schema validation is implemented for JSON Schema Draft
+  2020-12 and `evidence_version` 2.0.0; the full test suite passed (368 tests).
+- The Evidence Schema is not yet connected to every evidence producer or
+  persistent store. The implementation's required fields and vocabularies
+  differ from the Phase 4D.3 proposal. Resolve and version that contract before
+  producers adopt it.
+- Damage-chain manual review found structurally valid trigger chains in
+  Whirling Twisters, with Boundless Energy II paths to triggered targets
+  remaining indirect/unresolved. Herald skills were suspiciously emitted as
+  secondary-damage candidates despite the reviewed mechanics evidence; this
+  requires evidence-backed classification, not a name-based exception.
+
+### Active Phase Order
+
+1. Reconcile and approve the Evidence Schema contract against the v2.0.0
+   validator; keep evidence immutable and conclusions separately derived.
+2. Add validated capability and build-context evidence without assigning
+   unsupported roles.
+3. Build multi-role skill assessment and importance/readiness outputs that
+   explain each conclusion through evidence references.
+4. Revalidate damage-source and damage-chain classification against the real
+   build fixtures, preserving unresolved cases explicitly.
+5. Integrate validated build understanding into optimizer work only after the
+   evidence and analysis stages pass acceptance.
+
+Relationship discovery, contributor analysis, damage chains, skill roles,
+importance, viability, and optimization must share this evidence-first
+sequence. Historical phase notes below remain useful context but do not
+override this current ordering.
+
 Vision
 ------------------------------------------------------------
 
@@ -191,7 +228,7 @@ Validation:
 
 Status:
 
-🚧 ACTIVE
+✅ COMPLETE
 
 Goals:
 
@@ -256,47 +293,312 @@ Weapon Set Builds
 Multi-Skill Builds
 
 ------------------------------------------------------------
-4B-4 Damage Chain Detection
+4B-4A Damage Chain Model Separation
 ------------------------------------------------------------
 
 Status:
 
-⏳ PLANNED
+✅ COMPLETE
 
-Goals:
+Completed:
 
-Identify:
+✅ Extracted DamageChainRecord from damage_chain_resolver.py
+✅ Created canonical DamageChainRecord model in damage_chain_record.py
+✅ Updated DamageChainResolver to import and use the canonical model
+✅ Added damage_sources collection to DamageChainRecord
+✅ Updated related tests and validated the refactor
+✅ Resolver, report, and record tests passing (25 tests)
 
-• Damage Source
+Architectural Outcome:
 
-• Damage Enabler
+Damage model and resolution logic are separated.
 
-• Damage Amplifiers
+Ownership:
 
-• Primary Damage Chain
+damage_chain_record.py
+    DamageChainRecord
 
-Populate:
+damage_chain_resolver.py
+    DamageChainResolver
+    resolve_damage_chain()
 
-BuildProfile.damage_chain
+This establishes the canonical damage-chain model
+for future BuildProfile integration.
 
-BuildProfile.primary_damage_source
 
-BuildProfile.primary_damage_enablers
+------------------------------------------------------------
+4B-4B Damage Source Promotion and Classification
+------------------------------------------------------------
+
+Status:
+
+🚧 PARTIALLY COMPLETE
+
+Current Objective:
+
+Identify and promote damage contributors through
+relationship analysis.
+
+Classify and preserve:
+
+• Damage Sources
+• Triggers
+• Enablers
+• Amplifiers
+• Supports
+
+## Revised Rule 001
+
+Triggered Skill Promotion
+
+Status:
+
+IMPLEMENTED AND VALIDATED
+
+Definition:
+
+When skill or mechanic A TRIGGERS B:
+
+• Promote B to a damage-source candidate.
+• Keep existing damage-source candidates.
+• Preserve the trigger relationship and enablers.
+
+Validation Status:
+
+PASSING
+
+Validated By:
+
+- Triggered meta-skill promotion test.
+- Multi-source promotion test.
+- Twister + triggered skill validation.
+
+Detection must be relationship-driven, using
+RelationshipType values such as TRIGGERS, ENABLES,
+AMPLIFIES, and SUPPORTS. Do not classify by skill name.
+
+Current focus is contributor identification and
+relationship preservation, not contributor ranking.
+Rotation analysis is future optimization-phase work.
 
 Validation:
 
+Twister Builds
+Cast on Critical Builds
+Lightning Arrow / Comet Builds
 Totem Builds
-
-Meta Skill Builds
-
-Triggered Builds
-
-Weapon Set Builds
-
-Subskill Builds
-
+Weapon-Set Builds
 Multi-Skill Builds
 
+Completed:
+
+• Triggered Skill Promotion implemented.
+• Existing damage sources remain preserved.
+• Triggered skills are promoted into damage_sources.
+• Multi-source damage chains supported.
+• Twister validation passing.
+• Cast on Crit validation passing.
+• Totem/enabler validation passing.
+• 13 DamageChainResolver tests passing.
+
+Remaining:
+
+• Formal relationship classification layer.
+• Trigger classification.
+• Amplifier classification.
+• Separation of Triggers vs Enablers.
+
+## Current Test State
+
+Completed:
+
+- DamageChainRecord extraction.
+- Canonical model validation.
+- Resolver validation.
+- Report validation.
+- Triggered Skill Promotion validation.
+
+DamageChainResolver Results:
+
+13 Tests Passing
+
+Validated Scenarios:
+
+- Empty identity.
+- Primary skill selection.
+- Active subskill handling.
+- Weapon set preservation.
+- Triggered meta-skill promotion.
+- Totem enabled damage source resolution.
+- Multi-source DPS builds.
+- Triggered skill promotion alongside existing contributors.
+- Weapon set mismatch handling.
+- Twister + trigger interaction.
+- Unknown relationship handling.
+- Collection initialization.
+- Duplicate skill name resolution.
+
+Current Result:
+
+Rule 001 is working as expected.
+
+Triggered skills are promoted into damage_sources while preserving existing contributors.
+
+## Prior Relationship Classification Scope
+
+This earlier task framing is superseded as the immediate next milestone by
+Phase 4A below. Its classification goals remain relevant to Phase 4B, which
+must not begin until PoBSkillDatabase is implemented.
+
+Phase 4B - Relationship Discovery 2.0
+
+Relationship Classification
+
+Objective:
+
+Introduce first-class classification of relationship roles.
+
+Current State:
+
+Triggers are currently tracked through:
+
+- triggered_skills
+- enablers
+
+Target State:
+
+DamageChainRecord should explicitly model:
+
+- damage_sources
+- triggers
+- enablers
+- amplifiers
+- supports
+
+Goals:
+
+1. Separate Trigger classification from Enabler classification.
+2. Preserve Rule 001 promotion behaviour.
+3. Maintain relationship-driven detection.
+4. Avoid skill-name specific logic.
+5. Validate classification using:
+   - Cast on Critical
+   - Cast on Shock
+   - Cast on Freeze
+   - Lightning Rod
+   - Totem builds
+
+Expected Outcome:
+
+The optimizer understands not only which skills contribute damage, but also the role each skill performs within the build ecosystem.
+
+
+============================================================
+BUILD KNOWLEDGE & UNDERSTANDING MILESTONES
+============================================================
+
+These milestones define the architecture direction following the PoB data
+inventory, registry migration, GemDatabase V2, and SkillIdentity metadata
+integration. They supersede earlier assumptions that relationship discovery
+can proceed directly from gem metadata alone.
+
+------------------------------------------------------------
+PHASE 4A - POBSKILLDATABASE
+------------------------------------------------------------
+
+Status:
+    IMPLEMENTED AND VALIDATED
+
+Purpose:
+
+    Expose PoB skill mechanics as structured data.
+
+Authoritative Source:
+
+    Data/Skills/*.lua
+
+Planned Features:
+
+    Skill Types
+
+    Support Requirements
+
+    Support Exclusions
+
+    Trigger Compatibility
+
+    Mechanics Metadata
+
+Planned Outputs:
+
+    PoBSkillDatabase
+
+    Mechanics Records
+
+    Mechanics Lookups
+
+Implementation and coverage details are recorded in
+`Data/Reports/PoBSkillDatabase_Coverage_Report.md`.
+
+------------------------------------------------------------
+PHASE 4B - RELATIONSHIP DISCOVERY 2.0
+------------------------------------------------------------
+
+Status:
+    PENDING
+
+Purpose:
+
+    Produce evidence-based build relationships.
+
+Examples:
+
+    TRIGGERS
+
+    SUPPORTS
+
+    ENABLES
+
+    APPLIES_CURSE
+
+    USES_COMPANION
+
+Principle:
+
+    Relationships require evidence. Unknown relationships remain unknown
+    until the available evidence meets the required confidence threshold.
+
+Dependency:
+
+    PoBSkillDatabase must exist before Relationship Discovery 2.0 begins.
+
+------------------------------------------------------------
+PHASE 4C - DAMAGE SOURCE RESOLUTION 2.0
+------------------------------------------------------------
+
+Status:
+    PENDING
+
+Purpose:
+
+    Replace representative-based damage-source selection with resolution
+    grounded in the complete build and its evidence-backed relationships.
+
+Dependencies:
+
+    PoBSkillDatabase
+
+    Relationship Discovery 2.0
+
+------------------------------------------------------------
+ARCHITECTURE REFERENCES
+------------------------------------------------------------
+
+The PoB data inventory and PoBSkillDatabase design evidence are documented in:
+
+    Data/Reports/PoB2_Roaming_Data_Ingestion_Report.md
+
+    Data/Reports/Phase_4A_PoB_Skill_Mechanics_Database_Design.md
 
 
 ------------------------------------------------------------
@@ -848,31 +1150,146 @@ Missing Main Skill Builds
 
 
 ============================================================
-CURRENT NEXT MILESTONE
+PREVIOUS MILESTONE COMPLETION RECORD
 ============================================================
 
-Phase 4B-3
+The current architecture sequence is defined in the Build Knowledge &
+Understanding Milestones section above. Phase 4A PoBSkillDatabase is
+design-complete; its implementation is the next milestone.
 
-Skill Metadata & Damage Chain Investigation
+Phase 4B-4B
+
+Damage Source Promotion and Classification
 
 Status:
 
-🚧 ACTIVE
+🚧 PARTIALLY COMPLETE
 
 Goal:
 
-Determine exactly how PoB2 identifies:
+Identify and promote damage contributors through
+relationship analysis while preserving:
 
-• Active Skill Group
-• Active Skill
-• Active Subskill
-• DPS Skill
-• Damage Source
-• Damage Enabler
-• Meta Skill Relationships
-• Trigger Relationships
-• Weapon Set Relationships
+• Existing damage-source candidates
+• Trigger relationships
+• Enablers, amplifiers, and supports
+• Weapon-set relationships
 
-and build a trusted Damage Chain
-Detection system before implementing
-optimisation logic.
+Completed:
+
+• Triggered Skill Promotion implemented.
+• Existing damage sources remain preserved.
+• Triggered skills are promoted into damage_sources.
+• Multi-source damage chains supported.
+• Twister validation passing.
+• Cast on Crit validation passing.
+• Totem/enabler validation passing.
+• 13 DamageChainResolver tests passing.
+
+Remaining:
+
+• Formal relationship classification layer.
+• Trigger classification.
+• Amplifier classification.
+• Separation of Triggers vs Enablers.
+
+## Current Test State
+
+Completed:
+
+- DamageChainRecord extraction.
+- Canonical model validation.
+- Resolver validation.
+- Report validation.
+- Triggered Skill Promotion validation.
+
+DamageChainResolver Results:
+
+13 Tests Passing
+
+Validated Scenarios:
+
+- Empty identity.
+- Primary skill selection.
+- Active subskill handling.
+- Weapon set preservation.
+- Triggered meta-skill promotion.
+- Totem enabled damage source resolution.
+- Multi-source DPS builds.
+- Triggered skill promotion alongside existing contributors.
+- Weapon set mismatch handling.
+- Twister + trigger interaction.
+- Unknown relationship handling.
+- Collection initialization.
+- Duplicate skill name resolution.
+
+Current Result:
+
+Rule 001 is working as expected.
+
+Triggered skills are promoted into damage_sources while preserving existing contributors.
+
+## Prior Relationship Classification Scope
+
+This earlier task framing is superseded as the immediate next milestone by
+Phase 4A above. Its classification goals remain relevant to Phase 4B, which
+must not begin until PoBSkillDatabase is implemented.
+
+Phase 4B - Relationship Discovery 2.0
+
+Relationship Classification
+
+Objective:
+
+Introduce first-class classification of relationship roles.
+
+Current State:
+
+Triggers are currently tracked through:
+
+- triggered_skills
+- enablers
+
+Target State:
+
+DamageChainRecord should explicitly model:
+
+- damage_sources
+- triggers
+- enablers
+- amplifiers
+- supports
+
+Goals:
+
+1. Separate Trigger classification from Enabler classification.
+2. Preserve Rule 001 promotion behaviour.
+3. Maintain relationship-driven detection.
+4. Avoid skill-name specific logic.
+5. Validate classification using:
+   - Cast on Critical
+   - Cast on Shock
+   - Cast on Freeze
+   - Lightning Rod
+   - Totem builds
+
+Expected Outcome:
+
+The optimizer understands not only which skills contribute damage, but also the role each skill performs within the build ecosystem.
+
+Do not rank contributors or optimize rotations
+in this phase.
+
+# Prior Phase 4B Progress Record (Historical)
+
+4B-1 Foundations                COMPLETE
+4B-2 Relationship Discovery     COMPLETE
+4B-3 Damage Chain Resolution    COMPLETE
+4B-4A Record Refactor           COMPLETE
+4B-4B Triggered Skill Promotion COMPLETE
+4B-4C Relationship Classification SUPERSEDED BY PHASE 4B
+
+Historical Focus (superseded by the authoritative status above):
+
+Implement the Phase 4A PoBSkillDatabase design. Relationship Discovery 2.0
+follows only after that database exists.
