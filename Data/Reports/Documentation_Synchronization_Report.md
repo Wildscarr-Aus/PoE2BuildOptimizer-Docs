@@ -124,3 +124,61 @@ Neither issue was “fixed” through documentation-only assumptions.
 - Root README absence was confirmed in both repositories.
 - Documentation-only changes do not require a test run. `git diff --check`
   passed in both worktrees.
+
+## Phase 4D.7C Documentation Closeout — 2026-10-19
+
+The Phase 4D.7C documentation closeout synchronized the following shared
+records in both worktrees:
+
+- `Docs/Project_roadmap.md`
+- `Docs/Architecture.md`
+- `Docs/System_architecture_register.md`
+- `Docs/project_knowledge_base.md`
+- `Docs/Investigation_Archive.md`
+- `Docs/Contributor_Guidance.md`
+- `Docs/WeaponSetData.md`
+- `Docs/Handoffs/Phase_4D_7C_Weapon_Set_Data_Preservation_Handoff.md`
+- `Docs/Handoffs/Phase_4D_7C_Closeout.md`
+- `Data/Reports/Weapon_Set_Discovery_Report.md`
+- `Data/Reports/Version_Validation_Report.md`
+- `Data/Reports/Phase_4D_7_Wave1_Alignment_Report.md`
+- `Data/Reports/Evidence_Schema_Validation.md`
+- This synchronization report
+
+### Mismatches Found and Resolved
+
+1. The documentation repository's roadmap still carried the 2026-10-18
+   Phase 4D.4/368-test status, while the optimizer repository had the
+   newer Phase 4D.6 status. The current optimizer roadmap is now the shared
+   roadmap in both repositories, with the Phase 4D.7A-C completions added.
+2. The documentation repository lacked the current weapon-set preservation
+   guide, discovery report, version-validation report, and Wave 1 alignment
+   report. Matching copies are now present.
+3. The expected named Phase 4D.7C preservation handoff was not present.
+   Its implementation facts were recorded in the pre-existing
+   `HANDOFF191026.MD`, which is retained. A canonical named handoff and
+   closeout were created in both repositories.
+4. The older handoff described the multi-ItemSet example as a progression/
+   loadout workflow. The discovery evidence only proves that multiple
+   ItemSet records exist; the workflow semantics are unproven. The canonical
+   handoff documents this limit and does not repeat the inference. The
+   documentation repository's legacy `HANDOFF191026.MD` was amended to
+   withdraw the unsupported workflow claim.
+5. Version validation's 38-spec count refers to its 2026-10-19 validation
+   snapshot (33 XML builds). The refreshed weapon-set discovery snapshot
+   contains 38 XML files and 50 Tree/Spec elements. These are distinct
+   corpus snapshots and are described separately to avoid a count conflict.
+
+### Synchronization Result
+
+The shared roadmap, architecture, investigation archive, preservation
+guide, reports, handoff, and closeout match across the two repositories.
+The current knowledge-base and system-register status additions and the
+contributor-guidance boundary were applied in both; repository-specific
+configuration content and handoff history were retained. The main
+repository's `.github/copilot-instructions.md` embedded copies were also
+refreshed from their source documents.
+
+No code files were changed. Both worktrees passed `git diff --check`.
+The implementation validation remains the recorded result: 393 tests
+passed, with no Pylance diagnostics for changed Python files.

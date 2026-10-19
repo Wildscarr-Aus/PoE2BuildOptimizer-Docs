@@ -111,3 +111,21 @@ validation and role-design details are in
 `Data/Reports/Damage_Chain_Validation_Report.md`,
 `Data/Reports/Phase_4D_3_Skill_Role_And_Viability_Design.md`, and
 `Data/Reports/Evidence_Schema_Validation.md`.
+
+## Weapon-Set Data Preservation — Phase 4D.7C
+
+Weapon-set-related XML fact preservation is complete. The importer retains
+serialized allocation blocks, item sets and slots, skill sets and literal
+skill-slot assignments for future Build Understanding, GraphBuilder, and
+Optimizer Engine consumers. This is data preservation only; no current
+subsystem consumes weapon-set semantics.
+
+No semantic mappings were approved:
+
+- ItemSet is not assumed to mean Weapon Set.
+- SkillSet is not assumed to mean Weapon Set.
+- Skill slot values are not mapped to `WeaponSet1` or `WeaponSet2`.
+
+Weapon set semantics, skill-to-WeaponSet mapping, and weapon-set
+optimisation are deferred. See `Docs/WeaponSetData.md`, the weapon-set
+discovery report, and the Phase 4D.7C closeout handoff.

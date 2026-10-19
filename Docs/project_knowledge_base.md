@@ -942,6 +942,33 @@ despite mechanics evidence not declaring Damage or DamageOverTime remain
 suspicious and require future evidence-backed classification. These findings
 do not authorize name-based fixes or propagation assumptions.
 
+## Authoritative Phase 4D.7C Status — 2026-10-19
+
+Weapon Set Discovery (4D.7A), Version Validation (4D.7B), and Weapon-Set
+Data Preservation (4D.7C) are complete. The preservation implementation
+imports directly observed XML facts without assigning weapon-set semantics.
+
+The importer preserves:
+
+- `WeaponSet1/2` allocation block presence, raw node strings, node tokens,
+  and counts.
+- All ItemSet records, IDs, slot references, selected ItemSet ID, and
+  root/per-ItemSet `useSecondWeaponSet` values separately.
+- All SkillSet records, IDs, active selector, and literal skill-slot
+  assignments.
+
+No semantic mappings are approved. ItemSet != Weapon Set; SkillSet !=
+Weapon Set; Skill Slot != WeaponSet1/WeaponSet2. Weapon Set Semantics,
+Skill → WeaponSet Mapping, and Weapon Set Optimisation remain deferred.
+Project rule: **Import Facts Now; Store Facts Now; Interpret Later;
+Optimise Later.**
+
+The Phase 4D.7B version-validation snapshot resolved all 38 passive-tree
+specs (100%, zero failures) through the existing TreeData resource
+resolver. That resolver does not determine original PoB application
+version or build migration history. See the Phase 4D.7C handoff and
+`Data/Reports/Version_Validation_Report.md`.
+
 # END OF KNOWLEDGE BASE
 #
 #=====================================================================

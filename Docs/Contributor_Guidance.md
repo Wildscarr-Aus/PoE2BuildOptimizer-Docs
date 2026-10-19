@@ -33,3 +33,13 @@
   unresolved hypotheses. Do not introduce skill-name-specific exceptions or
   propagation assumptions.
 - Preserve pre-existing worktree changes and repository-specific configuration.
+
+## Weapon-Set Data Boundary
+
+- Phase 4D.7C imports and preserves directly observable weapon-related XML
+  facts. Preserve literal values and source distinctions; do not infer
+  relationships between ItemSets, SkillSets, skill slots, toggles, or
+  `WeaponSet1/2` allocations.
+- No Evidence Contract predicate or producer ownership is implied by data
+  preservation. Weapon-set semantics, skill-to-WeaponSet mapping, and
+  optimizer behavior remain deferred. See `Docs/WeaponSetData.md`.

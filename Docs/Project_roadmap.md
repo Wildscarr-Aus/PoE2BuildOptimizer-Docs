@@ -2,29 +2,44 @@
 POE2 BUILD OPTIMIZER ROADMAP
 ============================================================
 
-## Authoritative Current Status — 2026-10-18
+## Authoritative Current Status — 2026-10-19
 
 This status supersedes older "current focus" notes retained in the historical
 roadmap below.
 
 - The Phase 4A PoBSkillDatabase implementation and coverage work are present.
 - Phase 4D.3 Skill Role & Viability is design-complete.
-- Phase 4D.4 Evidence Schema validation is implemented for JSON Schema Draft
-  2020-12 and `evidence_version` 2.0.0; the full test suite passed (368 tests).
-- The Evidence Schema is not yet connected to every evidence producer or
-  persistent store. The implementation's required fields and vocabularies
-  differ from the Phase 4D.3 proposal. Resolve and version that contract before
-  producers adopt it.
+- Phase 4D.6 Evidence Contract 3.0.0 implementation and validation are
+  complete. The Draft 2020-12 schema, Vocabulary Registry 1.0.0, semantic
+  validator, explicit version routing, compatibility validation for 2.0.0,
+  and v3-only in-memory ledger passed the active suite (383 tests).
+- Forty-one fixture collections cover all approved predicate/strength/state
+  combinations and all reachable states. No producer or consumer alignment
+  was performed; adoption remains subject to separate authorization.
+- The 2.0.0 contract remains compatibility-validation only. Contract behavior
+  may not be expanded locally; the Alignment Review Stop Rule remains active.
 - Damage-chain manual review found structurally valid trigger chains in
   Whirling Twisters, with Boundless Energy II paths to triggered targets
   remaining indirect/unresolved. Herald skills were suspiciously emitted as
   secondary-damage candidates despite the reviewed mechanics evidence; this
   requires evidence-backed classification, not a name-based exception.
+- Phase 4D.7A Weapon Set Discovery, Phase 4D.7B Version Validation, and
+  Phase 4D.7C Weapon-Set Data Preservation are **COMPLETE**. The current
+  discovery inventory covers 38 XML builds (37 distinct contents); all 38
+  parsed successfully. The version validation snapshot resolved all 38
+  passive-tree specs with zero failures.
+- The importer preserves directly observed weapon-set-related XML facts for
+  future consumers. **Weapon Set Semantics, Skill → WeaponSet Mapping, and
+  Weapon Set Optimisation are DEFERRED.** No semantic mapping is approved.
+  The rule is: **Import Facts Now; Store Facts Now; Interpret Later;
+  Optimise Later.** See `Docs/WeaponSetData.md` and the Phase 4D.7C closeout.
+- Phase 4D.7C validation: 393 tests passed; Pylance was clean for changed
+  Python files; `git diff --check` passed.
 
 ### Active Phase Order
 
-1. Reconcile and approve the Evidence Schema contract against the v2.0.0
-   validator; keep evidence immutable and conclusions separately derived.
+1. **Complete:** Reconcile, approve, implement, and validate Evidence Contract
+   3.0.0; keep evidence immutable and conclusions separately derived.
 2. Add validated capability and build-context evidence without assigning
    unsupported roles.
 3. Build multi-role skill assessment and importance/readiness outputs that

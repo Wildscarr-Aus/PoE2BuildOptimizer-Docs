@@ -76,3 +76,20 @@ Full suite: **368 passed**.
 This implementation follows the Evidence Schema Validator task's explicit strength/category vocabularies and required-field list. Those enums and the smaller required-field set differ from parts of the earlier Phase 4D.3 design proposal. The design document was not modified per task scope. Before other systems emit evidence, the project should resolve that vocabulary/field-set discrepancy and then keep the validator schema version and design contract synchronized.
 
 No relationship, contributor-discovery/classification, damage-chain, resolver, role-design, or optimizer behavior was changed.
+
+## Subsequent Importer Preservation Boundary — 2026-10-19
+
+Phase 4D.7C added preservation of directly serialized weapon-set-related
+build XML data to the build model. Imported facts include passive
+`WeaponSet1/2` allocation blocks, all `ItemSet` and `SkillSet` records,
+active item/skill set selectors, root and per-item-set
+`useSecondWeaponSet` strings, named weapon-slot references, and literal
+skill-slot assignments.
+
+This is build-data import, not Evidence Contract emission or producer
+alignment. No Evidence Records are created from these fields, no predicate
+ownership was changed, and no semantic mapping was approved. In particular,
+`ItemSet`, `SkillSet`, and skill slot values are not mapped to numbered
+weapon-set allocations. See
+[`Docs/WeaponSetData.md`](../../Docs/WeaponSetData.md) and the
+Phase 4D.7C handoff for the full preservation boundary.

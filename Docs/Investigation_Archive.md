@@ -1183,6 +1183,39 @@ producers must not adopt either contract by assumption.
 
 ----------
 
+# Investigation Update — 2026-10-19: Weapon-Set Data and Version Validation
+
+## Weapon-Set Discovery and Preservation
+
+The refreshed discovery corpus contains 38 XML build files (37 distinct
+file contents), all parsed successfully. It records direct XML locations
+for passive `WeaponSet1/2` allocation blocks, item-set slot references,
+the root and per-item-set `useSecondWeaponSet` values, active item/skill
+selectors, and `Skill/@slot` assignments. The 38-build discovery snapshot
+has 50 Tree/Spec elements.
+
+The Phase 4D.7C importer now preserves these directly serialized facts.
+This does not prove semantic equivalence: ItemSet != Weapon Set; SkillSet !=
+Weapon Set; Skill Slot != WeaponSet1/WeaponSet2. No mapping or optimizer
+rule was approved. The full observations and importer contract are in
+`Data/Reports/Weapon_Set_Discovery_Report.md` and `Docs/WeaponSetData.md`.
+
+## Version Resolution Validation
+
+The Phase 4D.7B validation processed 38 passive-tree specs in its corpus
+snapshot. All 38 supplied tree versions resolved through the existing
+Version Resolution subsystem, and no resolution failed. This validates
+TreeData resource resolution only; it does not identify the original PoB
+application release or a build's migration history. See
+`Data/Reports/Version_Validation_Report.md`.
+
+## Phase 4D.7C Validation
+
+The full `Tests` suite passed with 393 tests after the preservation
+implementation. Pylance diagnostics were clean for changed Python files,
+and `git diff --check` passed. This records the validation result; it does
+not alter the deferred semantic questions.
+
 #=====================================================================
 #
 # END OF INVESTIGATION ARCHIVE

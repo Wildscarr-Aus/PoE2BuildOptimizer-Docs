@@ -258,6 +258,41 @@ Architecture references:
 
     Data/Reports/Phase_4A_PoB_Skill_Mechanics_Database_Design.md
 
+------------------------------------------------------------
+PHASE 4D.7C - WEAPON-SET DATA PRESERVATION
+------------------------------------------------------------
+
+Status
+
+    COMPLETE
+
+Implemented
+
+    Src/Io/weapon_set_data_importer.py
+
+    Docs/WeaponSetData.md
+
+The shared importer preserves directly observed allocation blocks,
+ItemSets, named item slots, toggle strings, SkillSets, active selectors,
+and literal skill-slot assignments.
+
+No current subsystem consumes weapon-set semantics. Future consumers may
+include Build Understanding, GraphBuilder, and Optimizer Engine; these
+consumers must not infer mappings without approved evidence.
+
+Deferred
+
+    Weapon Set Semantics
+
+    Skill -> WeaponSet Mapping
+
+    Weapon Set Optimisation
+
+Phase 4D.7B resolved 38 of 38 passive-tree specs through the TreeData
+resource resolver. The subsystem does not determine original PoB
+application version or migration history. See
+Data/Reports/Version_Validation_Report.md.
+
 
 #=====================================================================
 #
